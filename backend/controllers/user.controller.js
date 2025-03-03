@@ -11,6 +11,7 @@ export const createUserController = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
+
     try {
         const user = await userService.createUser(req.body);
 
