@@ -30,7 +30,6 @@ const Register = () => {
 
     const navigate = useNavigate()
 
-
     function submitHandler(e) {
         e.preventDefault()
 

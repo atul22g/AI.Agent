@@ -9,8 +9,6 @@ import { generateResult } from './services/ai.service.js';
 
 const port = process.env.PORT || 3000;
 
-
-
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
@@ -19,10 +17,9 @@ const io = new Server(server, {
 });
 
 
+
 io.use(async (socket, next) => {
-
     try {
-
         const token = socket.handshake.auth?.token || socket.handshake.headers.authorization?.split(' ')[ 1 ];
         const projectId = socket.handshake.query.projectId;
 
@@ -50,6 +47,7 @@ io.use(async (socket, next) => {
         next();
 
     } catch (error) {
+        console.log("Error in socket middleware", error);
         next(error)
     }
 
@@ -58,18 +56,11 @@ io.use(async (socket, next) => {
 
 io.on('connection', socket => {
     socket.roomId = socket.project._id.toString()
-
-
-    console.log('a user connected');
-
-
-
+    console.log('Sockit.io connected');
     socket.join(socket.roomId);
 
     socket.on('project-message', async data => {
-
         const message = data.message;
-
         const aiIsPresentInMessage = message.includes('@ai');
         socket.broadcast.to(socket.roomId).emit('project-message', data)
 
@@ -82,22 +73,19 @@ io.on('connection', socket => {
 
 
             io.to(socket.roomId).emit('project-message', {
+
                 message: result,
                 sender: {
                     _id: 'ai',
-                    email: 'AI'
+                    email: 'AI',
+                    username: 'AI'
                 }
             })
-
-
-            return
         }
-
-
     })
 
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+        console.log('Sockit.io disconnected');
         socket.leave(socket.roomId)
     });
 });

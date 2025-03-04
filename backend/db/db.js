@@ -12,6 +12,7 @@ function connect() {
             console.log("Connected to MongoDB");
         })
         .catch(err => {
+            console.log("MongoDB connection error");
             console.log(err);
         })
 }
