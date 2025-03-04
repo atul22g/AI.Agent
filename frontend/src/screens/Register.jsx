@@ -1,11 +1,13 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { UserContext } from '../context/user.context'
 import axios from '../config/axios'
 import { toast } from 'react-toastify';
 import { toastify } from '../config/toastify';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../redux/slices/userSlice';
 
 const Register = () => {
+    const dispatch = useDispatch();
     const [field, setField] = useState({
         username: "",
         email: "",
@@ -24,7 +26,7 @@ const Register = () => {
         });
     };
 
-    const { setUser } = useContext(UserContext)
+    // const { setUser } = useContext(UserContext)
 
     const navigate = useNavigate()
 
@@ -37,9 +39,9 @@ const Register = () => {
             email: field.email,
             password: field.password
         }).then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
             localStorage.setItem('token', res.data.token)
-            setUser(res.data.user)
+            dispatch(addUser(res.data.user))
             navigate('/')
         }).catch((err) => {
             console.log(err);

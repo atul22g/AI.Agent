@@ -10,7 +10,7 @@ export const createUser = async ({
 
     const hashedPassword = await userModel.hashPassword(password);
 
-    console.log("username === ", username);
+    // console.log("username === ", username);
 
     // check username
     if (!username || username.length <= 3) {
