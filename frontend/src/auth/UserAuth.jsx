@@ -1,33 +1,50 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import { UserContext } from '../context/user.context'
 import { useSelector } from 'react-redux';
+import axios from '../config/axios'
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../redux/slices/userSlice';
+import { addProjects } from '../redux/slices/projectSlice';
+
 
 const UserAuth = ({ children }) => {
+    const dispatch = useDispatch();
     const user = useSelector(state => state.user.userData);
-    // const { user } = useContext(UserContext)
-    const [ loading, setLoading ] = useState(true)
+    const [loading, setLoading] = useState(true)
     const token = localStorage.getItem('token')
     const navigate = useNavigate()
 
 
-console.log('user', user);
-
 
     useEffect(() => {
-        // if (user) {
-        //     setLoading(false)
-        // }
-
         if (!token) {
             navigate('/login')
+            return;
         }
 
-        // if (!user) {
-        //     navigate('/login')
-        // }
+        // get user Data
+        axios.get('/users/profile').then((res) => {
+            dispatch(addUser(res.data.user))
+            setLoading(false)
+        }).catch(() => {
+            setLoading(false)
+            navigate('/login')
+        })
 
-    }, [navigate, token, user])
+        // get projects data
+        axios.get('/projects/all').then((res) => {
+            dispatch(addProjects(res.data.projects))
+        }).catch(() => {
+            console.log("You Have No Projects")
+        })
+    }, [dispatch, token, navigate])
+
+    useEffect(() => {
+        if (user == null && !loading) {
+            navigate('/login')
+        }
+    }, [user, loading, navigate])
 
     if (loading) {
         return <div>Loading...</div>
@@ -39,5 +56,8 @@ console.log('user', user);
             {children}</>
     )
 }
+UserAuth.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 export default UserAuth

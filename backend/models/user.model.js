@@ -35,12 +35,14 @@ userSchema.statics.hashPassword = async function (password) {
 }
 userSchema.methods.isValidPassword = async function (password) {
     const user = await this.model('user').findOne({ _id: this._id }).select('password');
+    console.log("user ", user);
+    
     return await bcrypt.compare(password, user.password);
 }
 
 userSchema.methods.generateJWT = function () {
     return jwt.sign(
-        { email: this.email },
+        { email: this.email, username: this.username, _id: this._id },
         process.env.JWT_SECRET,
         { expiresIn: '24h' }
     );

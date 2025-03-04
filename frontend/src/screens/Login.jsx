@@ -22,7 +22,6 @@ const Login = () => {
             password
         }).then((res) => {
             console.log(res.data)
-
             localStorage.setItem('token', res.data.token)
             dispatch(addUser(res.data.user))
             navigate('/')
