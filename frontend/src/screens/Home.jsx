@@ -27,11 +27,11 @@ const Home = () => {
     }
 
     return (
-        <main className='p-4'>
+        <main className='p-4 bg-[color:var(--primary-color)] min-h-screen'>
             <div className="projects flex flex-wrap gap-3">
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="project p-4 border border-slate-300 rounded-md block">
+                    className="project p-4 text-white bg-[color:var(--tertiary-color)] rounded-md block hover:bg-slate-400">
                     New Project
                     <i className="ri-link ml-2"></i>
                 </button>
@@ -45,12 +45,12 @@ const Home = () => {
                                         state: { project }
                                     })
                                 }}
-                                className="project max-w-4 flex flex-col gap-2 cursor-pointer p-4 border border-slate-300 rounded-md min-w-52 hover:bg-slate-200">
+                                className="project max-w-4 flex flex-col gap-2 cursor-pointer bg-[color:var(--tertiary-color)] p-4 rounded-md min-w-52 hover:bg-slate-400">
                                 <h2
-                                    className='font-semibold'
+                                    className='font-semibold text-white'
                                 >{project.name}</h2>
 
-                                <div className="flex gap-2">
+                                <div className="flex gap-2 text-[color:var(--text-color)]">
                                     <p> <small> <i className="ri-user-line"></i> Collaborators</small> :</p>
                                     {project.users.length}
                                 </div>

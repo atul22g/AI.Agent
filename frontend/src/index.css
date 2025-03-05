@@ -8,12 +8,23 @@
   box-sizing: border-box;
 }
 
+:root{
+  --primary-color: #111827;
+  --secondary-color: #1f2937;
+  --tertiary-color: #374151;
+  --tertiary-color-hover: #94a3b8;
+  --button-color: #3b82f6;
+  --text-color: #f9fafb;
+}
+
 html,
 body {
   height: 100%;
   width: 100%;
 }
 
+
+/* old chatbox  */
 .message-box{
   scroll-behavior: smooth;
 }
