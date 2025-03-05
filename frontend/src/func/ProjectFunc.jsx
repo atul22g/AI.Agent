@@ -5,6 +5,8 @@ import { useEffect, useRef } from 'react'
 export const SyntaxHighlightedCode = (props) => {
     const ref = useRef(null)
 
+    console.log("props ", props);
+
     useEffect(() => {
         if (ref.current && props.className?.includes('lang-') && window.hljs) {
             window.hljs.highlightElement(ref.current)
@@ -14,11 +16,5 @@ export const SyntaxHighlightedCode = (props) => {
         }
     }, [props.className, props.children])
 
-    // return <code {...props} ref={ref} />
+    return <code {...props} ref={ref} />
 }
-
-// Removed appendIncomingMessage and appendOutgoingMessage functions
-
-// function scrollToBottom() {
-//     messageBox.current.scrollTop = messageBox.current.scrollHeight
-// }

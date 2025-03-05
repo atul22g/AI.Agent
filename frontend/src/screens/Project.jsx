@@ -7,7 +7,7 @@ import { initializeSocket, receiveMessage, sendMessage } from '../config/socket'
 import Markdown from 'markdown-to-jsx'
 import hljs from 'highlight.js';
 import { getWebContainer } from '../config/webContainer'
-import { SyntaxHighlightedCode } from '../func/ProjectFunc'
+import { SyntaxHighlightedCode } from '../func/ProjectFunc.jsx'
 
 
 const Project = () => {
@@ -77,19 +77,18 @@ const Project = () => {
             <div
                 className='overflow-auto bg-slate-950 text-white rounded-sm p-2'
             >
+                {/* {console.log("working ", messageObject) } */}
                 <Markdown
-                    // children={messageObject.text}
+                    children={messageObject.text}
                     options={{
                         overrides: {
                             code: SyntaxHighlightedCode,
                         },
                     }}
                 />
-                {messageObject.text}
             </div>)
     }
 
-    // console.log("messages ", messages);
 
 
     useEffect(() => {
