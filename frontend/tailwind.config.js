@@ -13,6 +13,8 @@ export default {
         "tertiary-color-hover": "var(--tertiary-color-hover)",
         "button-color": "vae(--button-color)",
         "text-color": "var(--text-color)",
+        "hover-box-color": "var(--hover-box-color)",
+        "hover-text-color": "var(--hover-text-color)",
       },
     },
   },

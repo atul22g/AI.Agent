@@ -14,6 +14,11 @@ export default defineConfig({
         target: 'https://unpkg.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/cdn/, '')
+      },
+      '/icon': {
+        target: 'https://atugatran.github.io',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/icon/, '')
       }
     }
   }
