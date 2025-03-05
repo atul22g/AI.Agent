@@ -334,7 +334,9 @@ const Project = () => {
                 </div>
 
                 {iframeUrl && webContainer &&
-                    (<div className="flex min-w-96 flex-col h-full">
+                
+                (<div className="flex min-w-96 flex-col h-full">
+                        {console.log("iframeUrl ", iframeUrl)}
                         <div className="address-bar">
                             <input type="text"
                                 onChange={(e) => setIframeUrl(e.target.value)}
