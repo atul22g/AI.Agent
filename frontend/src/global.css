@@ -25,8 +25,17 @@ body {
   width: 100%;
 }
 
+/* new chatbox */
+.messages-box{
+  height: calc(100vh - 2.5rem);
+  scroll-behavior: smooth;
+}
 
-/* old chatbox  */
+.messages-box::-webkit-scrollbar{
+  display: none;
+}
+
+/* old chatbox */
 .message-box{
   scroll-behavior: smooth;
 }
