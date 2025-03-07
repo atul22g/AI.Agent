@@ -37,7 +37,7 @@ const MessgesBar = () => {
                     className='w-full h-full rounded-sm bg-[color:var(--text-color)] outline-none border-none p-2'
                     type="text" name="input"
                     placeholder="@ai for chat ai" />
-                <span className='absolute right-2 top-2'><i className="fa-solid fa-paper-plane-top fa-lg"></i></span>
+                <span className='absolute right-2 top-2 text-[color:var(--primary-color)]'><i className="fa-solid fa-paper-plane-top fa-lg"></i></span>
             </div>
         </>
     )

@@ -25,6 +25,7 @@ const Home = () => {
                 console.log(error)
             })
     }
+    
 
     return (
         <main className='p-4 bg-[color:var(--primary-color)] min-h-screen'>
@@ -38,14 +39,15 @@ const Home = () => {
 
                 <div className='w-screen flex gap-2 flex-wrap'>
                     {
+                        
                         project?.map((project) => (
                             <div key={project._id}
-                                onClick={() => {
-                                    navigate(`/project`, {
-                                        state: { project }
-                                    })
-                                }}
-                                className="project max-w-4 flex flex-col gap-2 cursor-pointer bg-[color:var(--tertiary-color)] p-4 rounded-md min-w-52 hover:bg-[color:var(--hover-box-color)]">
+                            onClick={() => {
+                                navigate(`/codeEditor?id=${project._id}`, {
+                                    state: { project }
+                                })
+                            }}
+                            className="project max-w-4 flex flex-col gap-2 cursor-pointer bg-[color:var(--tertiary-color)] p-4 rounded-md min-w-52 hover:bg-[color:var(--hover-box-color)]">
                                 <h2
                                     className='font-semibold text-white'
                                 >{project.name}</h2>
