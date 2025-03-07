@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-
+import PropTypes from 'prop-types'
 
 // SyntaxHighlightedCode is a component that uses the highlight.js library to syntax highlight code blocks.
 export const SyntaxHighlightedCode = (props) => {
@@ -18,3 +18,9 @@ export const SyntaxHighlightedCode = (props) => {
 
     return <code {...props} ref={ref} />
 }
+
+// Add PropTypes validation for props
+SyntaxHighlightedCode.propTypes = {
+    className: PropTypes.string,
+    children: PropTypes.string,
+};

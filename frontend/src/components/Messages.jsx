@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react"
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { initializeSocket, receiveMessage, sendMessage } from '../config/socket.js'
 import { getWebContainer } from '../config/webContainer.js'
 import Markdown from "markdown-to-jsx"
 import { SyntaxHighlightedCode } from '../func/ProjectFunc.jsx'
+import { updateFileTree } from "../redux/slices/projectSlice.js"
 
 const Messages = () => {
+    const dispatch = useDispatch()
     // state
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
     const [webContainer, setWebContainer] = useState(null)
+    const [fileTree, setFileTree] = useState({})
+
     // 
     const user = useSelector(state => state.user.userData)
 
@@ -29,22 +33,21 @@ const Messages = () => {
         setMessage("")
     }
 
-
     function WriteAiMessage(message) {
         const messageObject = JSON.parse(message)
         return (
             <div
                 className='overflow-auto bg-slate-950 text-white rounded-sm p-2'
             >
-                {/* {console.log("working ", messageObject) } */}
                 <Markdown
-                    children={messageObject.text}
                     options={{
                         overrides: {
                             code: SyntaxHighlightedCode,
                         },
                     }}
-                />
+                >{messageObject.text}
+                </Markdown>
+
             </div>)
     }
 
@@ -62,15 +65,19 @@ const Messages = () => {
             if (data.sender._id == 'ai') {
                 const message = JSON.parse(data.message)
                 webContainer?.mount(message.fileTree)
-                // if (message.fileTree) {
-                //     setFileTree(message.fileTree || {})
-                // }
+                if (message.fileTree) {
+                    setFileTree(message.fileTree || {})
+                    // dispatch(addFileTree(message.fileTree))
+                    dispatch(updateFileTree({ projectID, fileTree: message.fileTree }));
+                }
                 setMessages(prevMessages => [...prevMessages, data]) // Update messages state
             } else {
                 setMessages(prevMessages => [...prevMessages, data]) // Update messages state
             }
         })
-    },[])
+    }, [])
+
+
 
 
     return (
