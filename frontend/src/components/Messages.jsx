@@ -26,10 +26,8 @@ const Messages = () => {
             sender: user
         })
         setMessages(prevMessages => [...prevMessages, { sender: user, message }])
-        
         setMessage("")
     }
-    console.log(messages)
 
 
     function WriteAiMessage(message) {
@@ -72,23 +70,24 @@ const Messages = () => {
                 setMessages(prevMessages => [...prevMessages, data]) // Update messages state
             }
         })
-    })
+    },[])
 
 
     return (
         <>
             <div className='messages-box p-2 flex flex-col gap-2 overflow-auto'>
-                {messages.map((msg, index) => (
-                    <div key={index} className={`${msg.sender._id === 'ai' ? 'max-w-80' : 'max-w-52'} ${msg.sender._id == user._id.toString() && 'ml-auto'}  message flex flex-col p-2 bg-slate-50 w-fit rounded-md`}>
-                        <small className='opacity-65 text-xs'>{msg.sender.email}</small>
-                        <div className='text-sm'>
-                            {msg.sender._id === 'ai' ?
-                            WriteAiMessage(msg.message)
-                            : <p>{msg.message}</p>}
-                            {/* <p>{msg.message}</p> */}
+                {messages.map((msg, index) => {
+                    return (
+                        <div key={index} className={`${msg.sender._id === 'ai' ? 'max-w-80' : 'max-w-52'} ${msg.sender._id == user._id.toString() && 'ml-auto'}  message flex flex-col p-2 bg-slate-50 w-fit min-w-10 rounded-md`}>
+                            <small className='opacity-65 text-xs'>{msg.sender.username}</small>
+                            <div className='text-sm'>
+                                {msg.sender._id === 'ai' ?
+                                    WriteAiMessage(msg.message)
+                                    : <p>{msg.message}</p>}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    )
+                })}
             </div>
             <div className='w-full h-10 absolute bottom-0'>
                 <input

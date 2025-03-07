@@ -27,7 +27,7 @@ body {
 
 /* new chatbox */
 .messages-box{
-  height: calc(100vh - 2.5rem);
+  height: calc(100vh - 5rem);
   scroll-behavior: smooth;
 }
 

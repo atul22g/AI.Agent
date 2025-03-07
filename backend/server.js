@@ -61,6 +61,8 @@ io.on('connection', socket => {
 
     socket.on('project-message', async data => {
         const message = data.message;
+        console.log("message  ", message);
+        
         const aiIsPresentInMessage = message.includes('@ai');
         socket.broadcast.to(socket.roomId).emit('project-message', data)
 
