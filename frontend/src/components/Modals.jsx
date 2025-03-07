@@ -2,25 +2,34 @@ import { useDispatch } from 'react-redux';
 import { AddCollaboratortoggle } from "../redux/slices/settingSlice";
 import ColloratorSelect from './ColloratorSelect';
 import axios from '../config/axios';
+import { useState } from 'react';
 
 export const AddCollaboratorModal = () => {
     const dispatch = useDispatch();
+    const [selectedUser, setSelectedUser] = useState(null)
 
-        // You can use URLSearchParams to get query params
-        const queryParams = new URLSearchParams(location.search);
+    // You can use URLSearchParams to get query params
+    const queryParams = new URLSearchParams(location.search);
 
-        // Example: Getting a query param named 'id'
-        const projectID = queryParams.get('id');
+    // Example: Getting a query param named 'id'
+    const projectID = queryParams.get('id');
 
     const handleAddCollaborator = () => {
+        if (selectedUser == null) return null
+        const usersId = []
+
+        for (let i = 0; i < selectedUser.length; i++) {
+            const id = selectedUser[i].value;
+            usersId.push(id)
+        }
+
         try {
             axios.put("/projects/add-user", {
                 projectId: projectID,
-                // users: Array.from(selectedUserId)
+                users: Array.from(usersId)
             }).then(res => {
                 console.log(res.data)
-                // setIsModalOpen(false)
-
+                dispatch(AddCollaboratortoggle('close'))
             }).catch(err => {
                 console.log(err)
             })
@@ -37,7 +46,7 @@ export const AddCollaboratorModal = () => {
                 <div className="space-y-4">
                     <div>
                         <label htmlFor="name" className="block font-medium text-[color:var(--text-color)]">Name</label>
-                        <ColloratorSelect />
+                        <ColloratorSelect setSelectedUser={setSelectedUser} selectedUser={selectedUser} />
                     </div>
                 </div>
                 <div className="mt-6 flex justify-between">

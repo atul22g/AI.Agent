@@ -1,31 +1,35 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from "../config/axios"
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 const Home = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [projectName, setProjectName] = useState(null)
+    const [projectName, setProjectName] = useState('')
+    const [project, setproject] = useState(null)
 
     const navigate = useNavigate()
-    const project = useSelector(state => state.projects.projects)
+
+    const projectsel = useSelector(state => state.projects.projects)
+    useEffect(() => {
+        setproject(projectsel)
+    }, [projectsel ])
+
 
     function createProject(e) {
         e.preventDefault()
-        console.log({ projectName })
-
         axios.post('/projects/create', {
             name: projectName,
         })
             .then((res) => {
                 console.log(res)
                 setIsModalOpen(false)
+                setproject(projectsel)
             })
             .catch((error) => {
                 console.log(error)
             })
     }
-    
 
     return (
         <main className='p-4 bg-[color:var(--primary-color)] min-h-screen'>
@@ -39,15 +43,14 @@ const Home = () => {
 
                 <div className='w-screen flex gap-2 flex-wrap'>
                     {
-                        
-                        project?.map((project) => (
+                        project != null ? project?.map((project) => (
                             <div key={project._id}
-                            onClick={() => {
-                                navigate(`/codeEditor?id=${project._id}`, {
-                                    state: { project }
-                                })
-                            }}
-                            className="project max-w-4 flex flex-col gap-2 cursor-pointer bg-[color:var(--tertiary-color)] p-4 rounded-md min-w-52 hover:bg-[color:var(--hover-box-color)]">
+                                onClick={() => {
+                                    navigate(`/codeEditor?id=${project._id}`, {
+                                        state: { project }
+                                    })
+                                }}
+                                className="project max-w-4 flex flex-col gap-2 cursor-pointer bg-[color:var(--tertiary-color)] p-4 rounded-md min-w-52 hover:bg-[color:var(--hover-box-color)]">
                                 <h2
                                     className='font-semibold text-white'
                                 >{project.name}</h2>
@@ -58,7 +61,7 @@ const Home = () => {
                                 </div>
 
                             </div>
-                        ))
+                        )) : null
                     }
                 </div>
 
