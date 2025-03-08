@@ -4,7 +4,6 @@ import axios from '../../config/axios';
 export const updateFileTree = createAsyncThunk(
     'project/updateFileTree',
     async (data) => {
-        console.log(data);
         axios.put('/projects/update-file-tree', {
             projectId: data.projectID,
             fileTree: data.fileTree

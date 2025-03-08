@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { updateFileTree } from '../redux/slices/projectSlice';
 
 
-const KeyPressListener = ({ fileTree }) => {
+const KeyPressListener = ({ fileTree,setIsSaveFile }) => {
     const dispatch = useDispatch()
 
     // You can use URLSearchParams to get query params
@@ -50,8 +50,9 @@ const KeyPressListener = ({ fileTree }) => {
     useEffect(() => {
         // Check if both 'a' and 'b' are pressed together
         if (keysPressed.Alt && keysPressed.s) {
-            console.log(fileTree);
+            // console.log(fileTree);
             dispatch(updateFileTree({ projectID, fileTree }));
+            setIsSaveFile(true)
         }
     }, [keysPressed, fileTree, dispatch, projectID]);
 };

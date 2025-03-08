@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux'
 import hljs from "highlight.js";
-import KeyPressListener from "./KeyPressListener";
+import KeyPressListener from "../helpers/KeyPressListener";
 
 const CodeView = () => {
     // state
     const [fileTreeS, setFileTreeS] = useState('');
+    const [isSaveFile, setIsSaveFile] = useState(false);
     const [code, setCode] = useState('');
 
     const { currentFile } = useSelector(state => state?.CodeEditor)
@@ -13,15 +14,27 @@ const CodeView = () => {
     const fileTreeVal = projects != null ? projects[0]?.fileTree : '';
     const fileContent = fileTreeVal[currentFile]?.file?.contents || '';
 
-    useEffect(() => {
-        setFileTreeS(fileTreeVal)
-        setCode(fileContent)
-    }, [fileTreeVal, fileTreeS, fileContent, currentFile]);
 
+
+    const fethchData = (updatedContent, updatedFileTree) => {
+        setFileTreeS(updatedFileTree)
+        setCode(updatedContent)
+    }
+
+    useEffect(() => {
+        if (!isSaveFile) {
+            setFileTreeS(fileTreeVal)
+            setCode(fileContent)
+        }
+    }, [fileTreeVal, fileTreeS, fileContent, currentFile, isSaveFile]);
+
+    useEffect(() => {
+        setIsSaveFile(false)
+    }, [currentFile])
     return (
         <>
-            <KeyPressListener fileTree={fileTreeS} />
-            {fileTreeS[currentFile] && (
+            <KeyPressListener fileTree={fileTreeS} setIsSaveFile={setIsSaveFile} />
+            {fileTreeS && fileTreeS[currentFile] && (
                 <div className="code-editor-area h-full w-full overflow-hidden flex-grow bg-slate-50 absolute">
                     <pre className="hljs h-full">
                         <code
@@ -36,9 +49,12 @@ const CodeView = () => {
                                         file: { contents: updatedContent }
                                     }
                                 };
+                                fethchData(updatedContent, updatedFileTree);
+
+                                // console.log(updatedFileTree);
 
                                 setCode(updatedContent)
-                                setFileTreeS(updatedFileTree);
+                                // setFileTreeS(updatedFileTree);
                             }}
                             style={{
                                 whiteSpace: 'pre-wrap',

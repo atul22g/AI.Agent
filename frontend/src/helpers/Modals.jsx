@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { AddCollaboratortoggle } from "../redux/slices/settingSlice";
-import ColloratorSelect from './ColloratorSelect';
+import ColloratorSelect from '../components/ColloratorSelect';
 import axios from '../config/axios';
 import { useState } from 'react';
 

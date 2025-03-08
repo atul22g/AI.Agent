@@ -5,7 +5,7 @@ import Home from '../screens/Home'
 import Project from '../screens/Project'
 import UserAuth from '../auth/UserAuth'
 import { CodeEditor } from '../screens/CodeEditor'
-import { AddCollaboratorModal } from '../components/Modals'
+import { AddCollaboratorModal } from '../helpers/Modals'
 import { useSelector } from 'react-redux'
 
 const AppRoutes = () => {
