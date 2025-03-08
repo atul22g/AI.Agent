@@ -33,7 +33,7 @@ const UserAuth = ({ children }) => {
             }).catch(() => {
                 console.log("You Have No Projects")
             })
-        }, 2000);
+        }, 5000);
     }, [dispatch, navigate])
 
 

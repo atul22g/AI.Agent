@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import CodeView from './CodeView'
+import { filesOpens } from '../redux/slices/codeEditorSlice'
 
 const CodeBar = () => {
+    const dispatch = useDispatch()
     const { currentFile, ifcurrentFileOpen } = useSelector(state => state.CodeEditor)
     const [currentFileState, setCurrentFileState] = useState(null)
     const [ifCurrentFile, setIfCurrentFile] = useState(false)
@@ -21,13 +24,18 @@ const CodeBar = () => {
             setIfCurrentFile(true)
             let newOpenFiles = openFiles.filter(item => item !== file)
             setOpenFiles([...newOpenFiles])
+            dispatch(filesOpens({ currentFile: '' }))
         }
+    }
+
+    const changeFile = (file) => {
+        setCurrentFileState(file)
+        dispatch(filesOpens({ currentFile: file }))
     }
 
     useEffect(() => {
         if (currentFile != currentFileState) {
             setCurrentFileState(currentFile)
-
         }
         if (!openFiles.includes(currentFile) && currentFile != null && !ifCurrentFile) {
             setCurrentFileState(currentFile)
@@ -41,19 +49,21 @@ const CodeBar = () => {
 
 
     return (
-        <div className="w-full">
+        <div className="w-full relative">
             {/* Open Files */}
             <div className="w-full h-9 bg-[color:var(--secondary-color)] flex">
                 {openFiles.map((file, index) => (
                     <span key={index}
-                        onClick={() => setCurrentFileState(file)}
+                        onClick={() => changeFile(file)}
                         className={`bg-slate-600 text-[color:var(--text-color)] border-b-2 cursor-pointer h-9 w-40 flex justify-evenly items-center group ${currentFileState == file ? 'border-white' : 'border-transparent'}`}>
                         <i className="fa-solid fa-files"></i>
                         <span className="font-medium">{file}</span>
-                        <i onClick={(e) => removecurrentFile(e,file)} className={`fa-light fa-xmark opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-400 duration-200 rounded-md p-1 ${currentFileState == file ? 'opacity-100 ' : ''}`}></i>
+                        <i onClick={(e) => removecurrentFile(e, file)} className={`fa-light fa-xmark opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-400 duration-200 rounded-md p-1 ${currentFileState == file ? 'opacity-100 ' : ''}`}></i>
                     </span>
                 ))}
             </div>
+            {/* Code View */}
+            <CodeView />
         </div>
     )
 }

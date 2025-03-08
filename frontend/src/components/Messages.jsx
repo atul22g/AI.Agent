@@ -12,7 +12,6 @@ const Messages = () => {
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
     const [webContainer, setWebContainer] = useState(null)
-    const [fileTree, setFileTree] = useState({})
 
     // 
     const user = useSelector(state => state.user.userData)
@@ -66,7 +65,6 @@ const Messages = () => {
                 const message = JSON.parse(data.message)
                 webContainer?.mount(message.fileTree)
                 if (message.fileTree) {
-                    setFileTree(message.fileTree || {})
                     // dispatch(addFileTree(message.fileTree))
                     dispatch(updateFileTree({ projectID, fileTree: message.fileTree }));
                 }
@@ -82,7 +80,7 @@ const Messages = () => {
 
     return (
         <>
-            <div className='messages-box p-2 flex flex-col gap-2 overflow-auto'>
+            <div className='scrollbar-hidden p-2 flex flex-col gap-2 overflow-auto'>
                 {messages.map((msg, index) => {
                     return (
                         <div key={index} className={`${msg.sender._id === 'ai' ? 'max-w-80' : 'max-w-52'} ${msg.sender._id == user._id.toString() && 'ml-auto'}  message flex flex-col p-2 bg-slate-50 w-fit min-w-10 rounded-md`}>

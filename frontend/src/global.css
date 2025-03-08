@@ -31,7 +31,8 @@ body {
   scroll-behavior: smooth;
 }
 
-.messages-box::-webkit-scrollbar{
+body::-webkit-scrollbar,
+.scrollbar-hidden::-webkit-scrollbar{
   display: none;
 }
 

@@ -80,8 +80,9 @@ const model = genAI.getGenerativeModel({
     }
     </example>
 
-    IMPORTANT : don't use file name like routes/index.js, routes/user.js, routes/auth.js, routes/api.js, routes/*.js
+    IMPORTANT : don't use file name like routes/*.js
     IMPORTANT : don't create a folder
+    IMPORTANT : create a server.js file, packages.json files only
     `
 });
 
