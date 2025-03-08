@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import ActivityBar from "../components/ActivityBar"
 import { useSelector } from 'react-redux'
 import ExplorerBar from "../components/ExplorerBar"
+import CodeBar from "../components/CodeBar"
 export const CodeEditor = () => {
     // get data from localstrge 
     const ExplorerVal = localStorage.getItem("Explorer")
@@ -23,6 +24,9 @@ export const CodeEditor = () => {
             <div className={`bg-[color:var(--secondary-color)] min-h-screen ${explorer === 'close' ? 'w-0' : 'w-72'} flex flex-col overflow-hidden relative`}>
                 <ExplorerBar />
             </div>
+            {/* CodeBar */}
+            <CodeBar />
+
         </section>
     )
 }
