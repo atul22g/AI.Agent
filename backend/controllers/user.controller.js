@@ -21,6 +21,10 @@ export const createUserController = async (req, res) => {
 
         res.status(201).json({ user, token });
     } catch (error) {
+        if (error.code === 11000) {
+            // Duplicate key error (e.g., email or username already exists)
+            return res.status(400).json({ message: "Email or username already exists" });
+        }
         res.status(400).send(error.message);
     }
 }
@@ -40,18 +44,28 @@ export const loginController = async (req, res) => {
 
         if (!user) {
             return res.status(401).json({
-                errors: 'Invalid credentials 1'
+                errors: [
+                    {
+                        field: 'email, password',
+                        msg: 'Invalid credentials'
+                    }
+                ]
             })
         }
 
         const isMatch = await user.isValidPassword(password);
         console.log("password ", password);
         console.log("isMatch ", isMatch);
-        
+
 
         if (!isMatch) {
             return res.status(401).json({
-                errors: 'Invalid credentials 2'
+                errors: [
+                    {
+                        field: 'email, password',
+                        msg: 'Invalid credentials'
+                    }
+                ]
             })
         }
 
@@ -81,7 +95,7 @@ export const profileController = async (req, res) => {
 export const logoutController = async (req, res) => {
     try {
 
-        const token = req.cookies.token || req.headers.authorization.split(' ')[ 1 ];
+        const token = req.cookies.token || req.headers.authorization.split(' ')[1];
 
         redisClient.set(token, 'logout', 'EX', 60 * 60 * 24);
 

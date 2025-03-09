@@ -26,12 +26,20 @@ const Login = () => {
             dispatch(addUser(res.data.user))
             navigate('/')
         }).catch((err) => {
-            console.log(err);
-            // console.log(err.response.data);
-            const errorMessage = typeof err.response.data === 'string'
-                ? err.response.data.split(':')[2].trim()
-                : err.response.data.errors[0].msg;
-            toast.error(errorMessage, toastify())
+            localStorage.removeItem("token")
+            document.cookie = ''
+            if (typeof (err.response.data) === 'string') {
+                const errorMessage = err.response.data
+                toast.error(errorMessage, toastify())
+            }
+            else if (err.response.data.message) {
+                const errorMessage = err.response.data.message
+                toast.error(errorMessage, toastify())
+            }
+            else if (err.response.data.errors) {
+                const errorMessage = err.response.data.errors[0].msg
+                toast.error(errorMessage, toastify())
+            }
         })
     }
 

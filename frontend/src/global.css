@@ -8,7 +8,7 @@
   box-sizing: border-box;
 }
 
-:root{
+:root {
   --primary-color: #111827;
   --secondary-color: #1f2937;
   --tertiary-color: #374151;
@@ -26,20 +26,21 @@ body {
 }
 
 /* new chatbox */
-.messages-box{
+.messages-box {
   height: calc(100vh - 5rem);
   scroll-behavior: smooth;
 }
 
 body::-webkit-scrollbar,
-.scrollbar-hidden::-webkit-scrollbar{
+.scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
 
 /* old chatbox */
-.message-box{
+.message-box {
   scroll-behavior: smooth;
 }
-.message-box::-webkit-scrollbar{
+
+.message-box::-webkit-scrollbar {
   display: none;
 }

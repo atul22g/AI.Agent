@@ -17,7 +17,8 @@ const CodeView = () => {
 
     useEffect(() => {
         const updateFileTree = JSON.parse(localStorage.getItem('ft'));
-        const updateFileContent = updateFileTree[currentFile]?.file?.contents || '';
+        
+        const updateFileContent = updateFileTree ? updateFileTree[currentFile]?.file?.contents || '' : '';
         setCode(updateFileContent);
         setFt(getFt);
         localStorage.setItem('fileContent', JSON.stringify(fileContent));
