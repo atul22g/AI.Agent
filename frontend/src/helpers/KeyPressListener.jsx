@@ -52,11 +52,8 @@ const KeyPressListener = () => {
     useEffect(() => {
         // Check if both 'a' and 'b' are pressed together
         if (keysPressed.Alt && keysPressed.s) {
-            console.log(fT);
             dispatch(updateFileTree({ projectID,fileTree: fT}));
-
         }
-    // }, [keysPressed, dispatch, projectID,fT]);
     }, [keysPressed]);
 };
 

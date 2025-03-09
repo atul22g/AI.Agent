@@ -8,27 +8,34 @@ const CodeView = () => {
     const [code, setCode] = useState('');
     const { currentFile } = useSelector(state => state?.CodeEditor);
     const { projects } = useSelector(state => state?.projects);
-    
+
     const getFt = JSON.parse(localStorage.getItem('ft'));
-    const geFileContent = JSON.parse(localStorage.getItem('fileContent'));
-    
+    // const geFileContent = JSON.parse(localStorage.getItem('fileContent'));
+
     const fileTree = projects != null ? projects[0]?.fileTree : '';
     const fileContent = fileTree[currentFile]?.file?.contents || '';
 
     useEffect(() => {
-        setCode(geFileContent);
+        const updateFileTree = JSON.parse(localStorage.getItem('ft'));
+        const updateFileContent = updateFileTree[currentFile]?.file?.contents || '';
+        setCode(updateFileContent);
         setFt(getFt);
-    }, [fileTree, fileContent, currentFile, geFileContent]);
-    
+        localStorage.setItem('fileContent', JSON.stringify(fileContent));
+    }, [currentFile])
+
+
     useEffect(() => {
         localStorage.setItem('fileContent', JSON.stringify(fileContent));
-        localStorage.setItem('ft', JSON.stringify(fileTree));
     }, [fileContent])
-    
+
+    useEffect(() => {
+        localStorage.setItem('ft', JSON.stringify(fileTree));
+    }, [fileTree])
+
 
     const handleKeyUp = (e) => {
         const updatedContent = e.target.innerText;
-        
+
         // Update ft directly
         const updatedFileTree = {
             ...ft,
@@ -36,9 +43,6 @@ const CodeView = () => {
                 file: { contents: updatedContent }
             }
         };
-
-        // Update state
-        // setFt(updatedFileTree);
 
         // Update localStorage after updating the state
         localStorage.setItem('ft', JSON.stringify(updatedFileTree));
