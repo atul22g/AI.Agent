@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { currentFileOpen, filesOpens } from '../redux/slices/codeEditorSlice'
 
@@ -6,17 +5,15 @@ const FileExplorer = () => {
     const dispatch = useDispatch()
     const project = useSelector(state => state?.projects?.projects)
     const fileTree = project != null ? project[0].fileTree : null
-    const [currentFile, setCurrentFile] = useState(null)
 
     const changeFile = (file) => {
-        setCurrentFile(file)
         dispatch(filesOpens({ currentFile: file }))
         dispatch(currentFileOpen({ file }))
     }
 
-    useEffect(() => {
-        dispatch(filesOpens({ currentFile }))
-    }, [dispatch, currentFile])
+    // useEffect(() => {
+    //     dispatch(filesOpens({ currentFile }))
+    // }, [currentFile])
 
     return (
         <>
