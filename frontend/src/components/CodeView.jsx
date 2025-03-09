@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import hljs from "highlight.js";
 import KeyPressListener from "../helpers/KeyPressListener";
+import DefaultPage from "../helpers/DefaultPage";
 
 const CodeView = () => {
     const [ft, setFt] = useState('');
@@ -17,7 +18,7 @@ const CodeView = () => {
 
     useEffect(() => {
         const updateFileTree = JSON.parse(localStorage.getItem('ft'));
-        
+
         const updateFileContent = updateFileTree ? updateFileTree[currentFile]?.file?.contents || '' : '';
         setCode(updateFileContent);
         setFt(getFt);
@@ -53,8 +54,8 @@ const CodeView = () => {
     return (
         <>
             <KeyPressListener />
-            {ft && ft[currentFile] && (
-                <div className="code-editor-area h-full w-full overflow-hidden flex-grow bg-slate-50 absolute">
+            {ft && ft[currentFile] ? (
+                <div className="code-editor-area h-full w-full overflow-hidden flex-grow absolute">
                     <pre className="hljs h-full">
                         <code
                             className="hljs h-full outline-none"
@@ -70,7 +71,7 @@ const CodeView = () => {
                         />
                     </pre>
                 </div>
-            )}
+            ) : <DefaultPage />}
         </>
     );
 };

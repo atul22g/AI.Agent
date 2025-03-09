@@ -56,7 +56,7 @@ const CodeBar = () => {
                 {openFiles.map((file, index) => (
                     <span key={index}
                         onClick={() => changeFile(file)}
-                        className={`bg-slate-600 text-[color:var(--text-color)] border-b-2 cursor-pointer h-9 w-40 flex justify-evenly items-center group ${currentFileState == file ? 'border-white' : 'border-transparent'}`}>
+                        className={`bg-[color:var(--code-bg)] text-[color:var(--text-color)] border-b-2 cursor-pointer h-9 w-40 flex justify-evenly items-center group ${currentFileState == file ? 'border-white' : 'border-transparent'}`}>
                         <i className="fa-solid fa-files"></i>
                         <span className="font-medium">{file}</span>
                         <i onClick={(e) => removecurrentFile(e, file)} className={`fa-light fa-xmark opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-400 duration-200 rounded-md p-1 ${currentFileState == file ? 'opacity-100 ' : ''}`}></i>

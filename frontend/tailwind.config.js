@@ -15,6 +15,7 @@ export default {
         "text-color": "var(--text-color)",
         "hover-box-color": "var(--hover-box-color)",
         "hover-text-color": "var(--hover-text-color)",
+        "code-bg": "var(--code-bg)",
       },
     },
   },
