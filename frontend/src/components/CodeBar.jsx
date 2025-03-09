@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import CodeView from './CodeView'
-import { filesOpens } from '../redux/slices/codeEditorSlice'
+import { currentFileOpen, filesOpens } from '../redux/slices/codeEditorSlice'
 
 const CodeBar = () => {
     const dispatch = useDispatch()
@@ -31,6 +31,7 @@ const CodeBar = () => {
     const changeFile = (file) => {
         setCurrentFileState(file)
         dispatch(filesOpens({ currentFile: file }))
+        dispatch(currentFileOpen({ file }))
     }
 
     useEffect(() => {

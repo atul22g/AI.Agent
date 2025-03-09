@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 
 function connect() {
     mongoose.connect(process.env.MONGODB_URI, {
-        // useNewUrlParser: true,
-        // useUnifiedTopology: true,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
         serverSelectionTimeoutMS: 60000, // Increase timeout to 60 seconds
         socketTimeoutMS: 60000, // Increase socket timeout to 60 seconds
     })
