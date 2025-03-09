@@ -55,10 +55,10 @@ const CodeView = () => {
         <>
             <KeyPressListener />
             {ft && ft[currentFile] ? (
-                <div className="code-editor-area h-full w-full overflow-hidden flex-grow absolute">
+                <div className="w-full flex-grow absolute max-h-[calc(100vh-2.25rem)]">
                     <pre className="hljs h-full">
                         <code
-                            className="hljs h-full outline-none"
+                            className="code-editor-area hljs h-full outline-none max-h-[calc(100vh-2.25rem)]"
                             contentEditable
                             suppressContentEditableWarning
                             onKeyUp={handleKeyUp}

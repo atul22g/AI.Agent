@@ -59,7 +59,10 @@ const CodeBar = () => {
                         className={`bg-[color:var(--code-bg)] text-[color:var(--text-color)] border-b-2 cursor-pointer h-9 w-40 flex justify-evenly items-center group ${currentFileState == file ? 'border-white' : 'border-transparent'}`}>
                         <i className="fa-solid fa-files"></i>
                         <span className="font-medium">{file}</span>
-                        <i onClick={(e) => removecurrentFile(e, file)} className={`fa-light fa-xmark opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-400 duration-200 rounded-md p-1 ${currentFileState == file ? 'opacity-100 ' : ''}`}></i>
+                        {/* cross icon */}
+                        {/* <i onClick={(e) => removecurrentFile(e, file)} className={`fa-light fa-xmark opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-400 duration-200 rounded-md p-1 ${currentFileState == file ? 'opacity-100 ' : ''}`}></i> */}
+                        {/* file update  */}
+                        <span className='bg-white p-1 rounded-full'></span>
                     </span>
                 ))}
             </div>

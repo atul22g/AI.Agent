@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     Collaborator: [],
     currentFile: null,
-    ifcurrentFileOpen: false
+    ifcurrentFileOpen: false,
 }
 
 const codeEditorSlice = createSlice({
@@ -20,10 +20,9 @@ const codeEditorSlice = createSlice({
         currentFileOpen: (state, action) => {
             if (state.currentFile == action.payload.file) {
                 state.ifcurrentFileOpen = true;
-            }else{
+            } else {
                 state.currentFile == action.payload.file
             }
-
         }
     }
 })

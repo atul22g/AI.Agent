@@ -45,3 +45,16 @@ body::-webkit-scrollbar,
 .message-box::-webkit-scrollbar {
   display: none;
 }
+
+/* scrollbar */
+.code-editor-area::-webkit-scrollbar {
+  width: 18px;
+}
+
+.code-editor-area::-webkit-scrollbar-track {
+  background: var(--code-bg);
+}
+
+.code-editor-area::-webkit-scrollbar-thumb {
+  background-color: var(--hover-box-color);
+}

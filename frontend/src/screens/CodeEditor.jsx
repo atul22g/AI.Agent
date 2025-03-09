@@ -17,7 +17,7 @@ export const CodeEditor = () => {
 
     }, [ExplorerVal, explorer, Explorer])
     return (
-        <section className="max-h-screen overflow-hidden bg-slate-600 flex">
+        <section className="max-h-screen bg-slate-600 flex">
             {/* Activity Bar */}
             <ActivityBar />
             {/* Explorer */}
