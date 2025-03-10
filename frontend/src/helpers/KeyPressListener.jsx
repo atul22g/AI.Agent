@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { updateFileTree } from '../redux/slices/projectSlice';
 
 
-const KeyPressListener = () => {
+const KeyPressListener = ({ setSaveOption }) => {
     const dispatch = useDispatch()
 
     const fT = JSON.parse(localStorage.getItem('ft'));
@@ -14,6 +14,7 @@ const KeyPressListener = () => {
     // Example: Getting a query param named 'id'
     const projectID = queryParams.get('id');
 
+    const [keyPress, setKeyPress] = useState()
     const [keysPressed, setKeysPressed] = useState({
         Alt: false,
         s: false,
@@ -21,6 +22,7 @@ const KeyPressListener = () => {
 
     useEffect(() => {
         const handleKeyDown = (event) => {
+            setKeyPress(event.keyCode)
             if (event.key === 'Alt' || event.key === 's') {
                 setKeysPressed((prevState) => ({
                     ...prevState,
@@ -30,6 +32,7 @@ const KeyPressListener = () => {
         };
 
         const handleKeyUp = (event) => {
+            setKeyPress(event.keyCode)
             if (event.key === 'Alt' || event.key === 's') {
                 setKeysPressed((prevState) => ({
                     ...prevState,
@@ -50,11 +53,27 @@ const KeyPressListener = () => {
     }, []);
 
     useEffect(() => {
-        // Check if both 'a' and 'b' are pressed together
         if (keysPressed.Alt && keysPressed.s) {
-            dispatch(updateFileTree({ projectID,fileTree: fT}));
+            dispatch(updateFileTree({ projectID, fileTree: fT }));
+            setSaveOption ? setSaveOption(true) : ''
+        } else if ((!keysPressed.Alt && !keysPressed.s)) {
+            if (
+                (keyPress >= 48 && keyPress <= 57) ||  // Numbers 0-9
+                (keyPress >= 65 && keyPress <= 90) ||  // Uppercase A-Z
+                (keyPress >= 97 && keyPress <= 122) || // Lowercase a-z
+                (keyPress >= 33 && keyPress <= 47) ||  // Special characters ! to /
+                (keyPress >= 58 && keyPress <= 64) ||  // Special characters : to @
+                (keyPress >= 92 && keyPress <= 96) ||  // Special characters [ to `
+                (keyPress >= 123 && keyPress <= 126) ||  // Special characters { to ~
+                keyPress == 8 || keyPress == 13     // Backslash and enter 
+            ) {
+                // if (keyPress != 18 && (keyPress <! 37 && keyPress >! 40)) { // ignore alt and arrow keys
+                if (keyPress != 18 && keyPress != 37 && keyPress != 38 && keyPress != 39 && keyPress != 40) { // ignore alt and arrow keys
+                    setSaveOption ? setSaveOption(false) : ''
+                }
+            }
         }
-    }, [keysPressed]);
+    }, [keysPressed, keyPress]);
 };
 
 export default KeyPressListener;
