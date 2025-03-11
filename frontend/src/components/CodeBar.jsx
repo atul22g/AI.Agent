@@ -67,25 +67,36 @@ const CodeBar = () => {
                             <span className="font-medium">{file}</span>
                             {
                                 currentFileState === file ? (
-
-                                    saveOption.map((fileItem, key) => {
-                                        if (fileItem.fileName === file) {
-                                            if (fileItem.status === "typing") {
-                                                return <span key={key} className='bg-white p-1 mx-[5px] rounded-full'></span>;
-                                            } else if (fileItem.status === "saving") {
-                                                return (
-                                                    <>
-                                                        <i onClick={(e) => removecurrentFile(e, file)} className={`fa-light fa-xmark opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-400 duration-200 rounded-md p-1 ${currentFileState == file ? 'opacity-100 ' : ''}`}></i>
-                                                    </>
-                                                )
+                                    saveOption.some(fileItem => fileItem.fileName === file) ? (
+                                        saveOption.map((fileItem, key) => {
+                                            if (fileItem.fileName === file) {
+                                                if (fileItem.status === "typing") {
+                                                    return <span key={key} className='bg-white p-1 mx-[5px] rounded-full'></span>;
+                                                } else if (fileItem.status === "saving") {
+                                                    return (
+                                                        <i
+                                                            key={key}
+                                                            onClick={(e) => removecurrentFile(e, file)}
+                                                            className={`fa-light fa-xmark opacity-0 group-hover:opacity-100 transition-opacity 
+                                hover:bg-slate-400 duration-200 rounded-md p-1 ${currentFileState === file ? 'opacity-100 ' : ''}`}
+                                                        ></i>
+                                                    );
+                                                }
                                             }
-                                        }
-                                        return null;
-                                    })
+                                            return null; // Ensures the function always returns a value
+                                        })
+                                    ) : (
+                                        <i
+                                            onClick={(e) => removecurrentFile(e, file)}
+                                            className={`fa-light fa-xmark opacity-0 group-hover:opacity-100 transition-opacity 
+            hover:bg-slate-400 duration-200 rounded-md p-1 ${currentFileState === file ? 'opacity-100 ' : ''}`}
+                                        ></i>
+                                    )
                                 ) : (
-                                    <span className='bg-[color:var(--code-bg)] mx-[5px] p-1 rounded-full'></span>
+                                    <span className='bg-[color:var(--code-bg)] mx-[5px] p-1 rounded-full'></span> // Default when file state doesn't match
                                 )
                             }
+
                         </span>
                     ))}
                 </div>

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
-import { AddCollaboratortoggle, ExplorerClosed } from '../redux/slices/settingSlice';
+import { AddCollaboratortoggle } from '../redux/slices/settingSlice';
 import FileExplorer from './FileExplorer';
 import Messages from './Messages';
 import Collaborator from './Collaborator';
@@ -9,12 +9,6 @@ import Collaborator from './Collaborator';
 const ExplorerBar = () => {
     const dispatch = useDispatch();
     const ActivityBarOption = useSelector(state => state.setting.ActivityBarOption)
-
-    // closeExplorer func
-    const closeExplorer = () => {
-        dispatch(ExplorerClosed())
-    }
-
     return (
         <>
             {/* title */}
@@ -24,7 +18,6 @@ const ExplorerBar = () => {
                     {
                         ActivityBarOption === 'collaborator' ? <i onClick={() => dispatch(AddCollaboratortoggle('open'))} className="cursor-pointer fa-solid fa-user-plus fa-2xs"></i> : ''
                     }
-                    <i onClick={() => closeExplorer()} className="cursor-pointer fa-solid fa-xmark-large fa-2xs"></i>
                 </span>
             </div >
             {/* Body */}

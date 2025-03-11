@@ -21,7 +21,7 @@ const ActivityBar = () => {
     
 
     return (
-        <div className="bg-[color:var(--primary-color)] min-h-screen w-14 flex flex-col">
+        <div className="bg-[color:var(--primary-color)] min-w-[53px] min-h-screen w-14 flex flex-col">
             {/* files */}
             <span onClick={() => ActivityBarFunc('files')} className={`text-white h-12 w-full cursor-pointer flex items-center justify-center border-l-2 border-transparent  ${activityBarOption === 'files' ? 'border-white' : ''}`}>
                 <i className="fa-solid fa-files fa-xl"></i>

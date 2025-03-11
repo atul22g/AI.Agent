@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import hljs from "highlight.js";
 import KeyPressListener from "../helpers/KeyPressListener";
 import DefaultPage from "../helpers/DefaultPage";
+import Terminal from "./Terminal";
 
 const CodeView = () => {
     const [ft, setFt] = useState('');
@@ -72,6 +73,7 @@ const CodeView = () => {
                     </pre>
                 </div>
             ) : <DefaultPage />}
+            <Terminal/>
         </>
     );
 };

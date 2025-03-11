@@ -14,10 +14,9 @@ export const CodeEditor = () => {
     useEffect(() => {
         setExplorer(ExplorerVal)
         setExplorer(Explorer)
-
     }, [ExplorerVal, explorer, Explorer])
     return (
-        <section className="max-h-screen bg-slate-600 flex">
+        <section className="relative max-h-screen bg-slate-600 flex">
             {/* Activity Bar */}
             <ActivityBar />
             {/* Explorer */}
@@ -26,7 +25,6 @@ export const CodeEditor = () => {
             </div>
             {/* CodeBar */}
             <CodeBar />
-
         </section>
     )
 }

@@ -3,7 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     ActivityBarOption: 'files',
     Explorer: 'open',
-    AddCollaboratorModal: 'close'
+    AddCollaboratorModal: 'close',
+    Terminal: false,
+    focused: false
+
 }
 
 const settingSlice = createSlice({
@@ -11,20 +14,34 @@ const settingSlice = createSlice({
     initialState,
     reducers: {
         ActivityBartoggle: (state, action) => {
-            state.ActivityBarOption = action.payload;
-            state.Explorer = 'open';
+            if (state.ActivityBarOption == action.payload) {
+                state.ActivityBarOption = 'none';
+                state.Explorer = 'close';
+            } else {
+                state.ActivityBarOption = action.payload;
+                state.Explorer = 'open';
+            }
         },
-        ExplorerClosed: (state) => {
-            state.ActivityBarOption = 'none';
-            state.Explorer = 'close';
+        TerminalToggle: (state) => {
+            console.log(state.Terminal);
+
+            if (state.focused) {
+                state.Terminal = !state.Terminal;
+                // console.log("Terminal toggle: " + state.Terminal);
+                state.focused = false;
+            } else {
+                state.focused = true;
+            }
+            // console.log("Terminal toggle outer");
+
         },
         AddCollaboratortoggle: (state, action) => {
             state.AddCollaboratorModal = action.payload;
-            
+
         }
     }
 })
 
-export const { ActivityBartoggle, ExplorerClosed, AddCollaboratortoggle } = settingSlice.actions;
+export const { ActivityBartoggle, TerminalToggle, AddCollaboratortoggle } = settingSlice.actions;
 
 export default settingSlice.reducer;

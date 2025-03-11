@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import { updateFileTree } from '../redux/slices/projectSlice';
+import { TerminalToggle } from '../redux/slices/settingSlice';
 
 
 const KeyPressListener = ({ setSaveOption, saveOption, currentFile }) => {
@@ -22,12 +23,17 @@ const KeyPressListener = ({ setSaveOption, saveOption, currentFile }) => {
 
     useEffect(() => {
         const handleKeyDown = (event) => {
-            setKeyPress(event.keyCode)
+            if (event.altKey && event.key == '`') {
+                dispatch(TerminalToggle());
+            }
             if (event.key === 'Alt' || event.key === 's') {
-                setKeysPressed((prevState) => ({
-                    ...prevState,
-                    [event.key]: true,
-                }));
+                setKeysPressed((prevState) => {
+                    if (prevState[event.key]) return prevState;
+                    return {
+                        ...prevState,
+                        [event.key]: true,
+                    }
+                });
             }
         };
 
@@ -50,33 +56,33 @@ const KeyPressListener = ({ setSaveOption, saveOption, currentFile }) => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         };
-    }, []);
+    });
 
     const SaveOptionFunc = (status, array) => {
         let found = false;
         let updatedArray = [...saveOption];
-        
+
         if (array.length !== 0) {
             for (let i = 0; i < array.length; i++) {
                 if (array[i].fileName === currentFile) {
                     array[i].status = status;
                     found = true;
-        
+
                     // Update saveOption with the modified object
-                    updatedArray = updatedArray.map(item => 
+                    updatedArray = updatedArray.map(item =>
                         item.fileName === currentFile ? { ...item, status: status } : item
                     );
                     break; // Exit loop once found
                 }
             }
         }
-    
+
         if (found) {
             setSaveOption(updatedArray);
         } else {
             setSaveOption([...saveOption, { fileName: currentFile, status: status }]);
         }
-        
+
     };
 
     useEffect(() => {
@@ -85,7 +91,6 @@ const KeyPressListener = ({ setSaveOption, saveOption, currentFile }) => {
             if (currentFile && setSaveOption) {
                 SaveOptionFunc("saving", saveOption);
             }
-
         } else if ((!keysPressed.Alt && !keysPressed.s)) {
             if (
                 (keyPress >= 48 && keyPress <= 57) ||  // Numbers 0-9
@@ -97,11 +102,8 @@ const KeyPressListener = ({ setSaveOption, saveOption, currentFile }) => {
                 (keyPress >= 123 && keyPress <= 126) ||  // Special characters { to ~
                 keyPress == 8 || keyPress == 13     // Backslash and enter 
             ) {
-                // if (keyPress != 18 && (keyPress <! 37 && keyPress >! 40)) { // ignore alt and arrow keys
                 if (keyPress != 18 && keyPress != 37 && keyPress != 38 && keyPress != 39 && keyPress != 40) { // ignore alt and arrow keys
                     if (currentFile && setSaveOption) {
-                        // setSaveOption([...saveOption, { 'fileName': currentFile, status: "typing" }])
-                        // setSaveOption((prevSet) => new Set([...prevSet, { 'fileName': currentFile, status: "typing" }]));
                         SaveOptionFunc("typing", saveOption);
                     }
                 }
