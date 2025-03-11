@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import CodeView from './CodeView'
 import { currentFileOpen, filesOpens } from '../redux/slices/codeEditorSlice'
 import KeyPressListener from '../helpers/KeyPressListener'
+import Terminal from './Terminal'
 
 const CodeBar = () => {
     const dispatch = useDispatch()
@@ -58,7 +59,7 @@ const CodeBar = () => {
             <KeyPressListener setSaveOption={setSaveOption} saveOption={saveOption} currentFile={currentFile} />
             <div className="w-full relative">
                 {/* Open Files */}
-                <div className="w-full h-9 bg-[color:var(--secondary-color)] flex">
+                <div className="w-full h-9 bg-[color:var(--secondary-color)] flex overflow-scroll message-box">
                     {openFiles.map((file, index) => (
                         <span key={index}
                             onClick={() => changeFile(file)}
@@ -102,6 +103,8 @@ const CodeBar = () => {
                 </div>
                 {/* Code View */}
                 <CodeView />
+                {/* Terminal */}
+                <Terminal/>
             </div>
         </>
     )

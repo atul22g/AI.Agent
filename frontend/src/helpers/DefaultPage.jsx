@@ -1,6 +1,6 @@
 const DefaultPage = () => {
     return (
-        <div className="bg-slate-700 h-[calc(100vh-2.25rem)] w-full p-4">
+        <div className="bg-[color:var(--code-bg)] h-[calc(100vh-2.25rem)] w-full p-4">
             {/* Shortcut Keys */}
             <h2 className="text-slate-300 font-bold text-2xl pb-3">ShortCut Keys</h2>
             <div className="flex flex-col gap-3">

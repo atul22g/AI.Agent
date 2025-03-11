@@ -56,5 +56,5 @@ body::-webkit-scrollbar,
 }
 
 .code-editor-area::-webkit-scrollbar-thumb {
-  background-color: var(--hover-box-color);
+  background-color: var(--tertiary-color);
 }

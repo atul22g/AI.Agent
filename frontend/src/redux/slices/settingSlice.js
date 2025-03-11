@@ -23,8 +23,6 @@ const settingSlice = createSlice({
             }
         },
         TerminalToggle: (state) => {
-            console.log(state.Terminal);
-
             if (state.focused) {
                 state.Terminal = !state.Terminal;
                 // console.log("Terminal toggle: " + state.Terminal);
