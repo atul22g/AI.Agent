@@ -25,6 +25,7 @@ const UserAuth = ({ children }) => {
                 dispatch(addUser(res.data.user))
                 setLoading(false)
             }).catch(() => {
+                toast.info("Internal Server Error", toastify())
                 setLoading(false)
                 navigate('/login')
             })
@@ -33,7 +34,6 @@ const UserAuth = ({ children }) => {
             axios.get('/projects/all').then((res) => {
                 dispatch(addProjects(res.data.projects))
             }).catch(() => {
-                toast.info("You Have No Projects", toastify())
             })
         }, 5000);
     }, [dispatch, navigate])

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { updateFileTree } from '../redux/slices/projectSlice';
 
 
-const KeyPressListener = ({ setSaveOption }) => {
+const KeyPressListener = ({ setSaveOption, saveOption, currentFile }) => {
     const dispatch = useDispatch()
 
     const fT = JSON.parse(localStorage.getItem('ft'));
@@ -52,10 +52,40 @@ const KeyPressListener = ({ setSaveOption }) => {
         };
     }, []);
 
+    const SaveOptionFunc = (status, array) => {
+        let found = false;
+        let updatedArray = [...saveOption];
+        
+        if (array.length !== 0) {
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].fileName === currentFile) {
+                    array[i].status = status;
+                    found = true;
+        
+                    // Update saveOption with the modified object
+                    updatedArray = updatedArray.map(item => 
+                        item.fileName === currentFile ? { ...item, status: status } : item
+                    );
+                    break; // Exit loop once found
+                }
+            }
+        }
+    
+        if (found) {
+            setSaveOption(updatedArray);
+        } else {
+            setSaveOption([...saveOption, { fileName: currentFile, status: status }]);
+        }
+        
+    };
+
     useEffect(() => {
         if (keysPressed.Alt && keysPressed.s) {
             dispatch(updateFileTree({ projectID, fileTree: fT }));
-            setSaveOption ? setSaveOption(true) : ''
+            if (currentFile && setSaveOption) {
+                SaveOptionFunc("saving", saveOption);
+            }
+
         } else if ((!keysPressed.Alt && !keysPressed.s)) {
             if (
                 (keyPress >= 48 && keyPress <= 57) ||  // Numbers 0-9
@@ -69,7 +99,11 @@ const KeyPressListener = ({ setSaveOption }) => {
             ) {
                 // if (keyPress != 18 && (keyPress <! 37 && keyPress >! 40)) { // ignore alt and arrow keys
                 if (keyPress != 18 && keyPress != 37 && keyPress != 38 && keyPress != 39 && keyPress != 40) { // ignore alt and arrow keys
-                    setSaveOption ? setSaveOption(false) : ''
+                    if (currentFile && setSaveOption) {
+                        // setSaveOption([...saveOption, { 'fileName': currentFile, status: "typing" }])
+                        // setSaveOption((prevSet) => new Set([...prevSet, { 'fileName': currentFile, status: "typing" }]));
+                        SaveOptionFunc("typing", saveOption);
+                    }
                 }
             }
         }

@@ -53,7 +53,7 @@ const CodeView = () => {
 
     return (
         <>
-            <KeyPressListener />
+            <KeyPressListener/>
             {ft && ft[currentFile] ? (
                 <div className="w-full flex-grow absolute max-h-[calc(100vh-2.25rem)]">
                     <pre className="hljs h-full">
