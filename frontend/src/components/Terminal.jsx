@@ -1,17 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import commandActions from "../helpers/cmdHander"; // Importing command handlers
+import { BasicCommand, WebContainerCommand } from "../helpers/cmdHander"; // Importing command handlers
 import { getWebContainer } from '../config/webContainer'
 
 export default function TerminalInput() {
     // State for storing user input and executed commands
     const [input, setInput] = useState("");
     const [commands, setCommands] = useState([]);
-    const [webContainer, setWebContainer] = useState([]);
+    const [webContainer, setWebContainer] = useState(null);
 
     // Redux state to check if the terminal is open
     const TerminalOpen = useSelector(state => state.setting.Terminal);
 
+    // 
+    const ft = JSON.parse(localStorage.getItem("ft"));
     // References for terminal container and input field
     const terminalRef = useRef(null);
     const inputRef = useRef(null);
@@ -24,24 +26,59 @@ export default function TerminalInput() {
         if (!webContainer) {
             getWebContainer().then(container => {
                 setWebContainer(container)
-                console.log("container Start: ", container);
-                
+                // console.log("container Start: ", container);
             })
         }
+        webContainer?.mount(ft)
 
-    }, [commands, TerminalOpen]);
+
+    }, [commands, TerminalOpen, ft]);
 
     // Function to handle command execution
     const handleCommand = (cmd) => {
         if (cmd === "cls") return setCommands([]); // Special case for clearing terminal
+        let isCmdProcess;
 
-        // Execute command if found, otherwise return a "Command Not Found" message
-        const output = commandActions[cmd]
-            ? commandActions[cmd]()
-            : 'Command Not Found! Type help for commands';
+        const webContainerCmdFunc = async () => {
+            try {
+                let command = WebContainerCommand[cmd]();
+                console.log(command[0]);
+                
+                const cmdProcess = await webContainer?.spawn(command[0], command.slice(1));
+                if (cmdProcess?.output) {
+                    cmdProcess.output.pipeTo(new WritableStream({
+                        write(chunk) {
+                            setCommands(prev => [...prev, { cmd, output: chunk }]);
+                        }
+                    }));
+                }
+            } catch {
+                setCommands(prev => [...prev, { cmd, output: `Command Not Found ${cmd}` }]);
+            }
+        };
+
+        // Execute command if found, otherwise return a Redirect to the webContainerCmdFunc
+        let output;
+        try {
+            if (BasicCommand[cmd]) {
+                output = BasicCommand[cmd]()
+                isCmdProcess = false
+            } else {
+                output = WebContainerCommand[cmd]()
+                isCmdProcess = true
+            }
+
+        } catch {
+            setCommands(prev => [...prev, { cmd, output: `Command not found ${cmd}` }]);
+            return []
+        }
 
         // Add the executed command and its output to the history
-        setCommands(prev => [...prev, { cmd, output }]);
+        if (!isCmdProcess) {
+            setCommands(prev => [...prev, { cmd, output }]);
+        } else (
+            webContainerCmdFunc()
+        )
     };
 
     // Handle keypress events, especially the "Enter" key to execute commands
@@ -60,14 +97,13 @@ export default function TerminalInput() {
         >
             {/* Render command history */}
             {commands.map(({ cmd, output }, index) => (
-                <div key={index} className="mx-2 my-1">
-                    <span className="text-white">Terminal &gt; </span>
-                    <span className="text-yellow-300">{cmd}</span>
-                    {output && (
-                        // Render command output (supports HTML via dangerouslySetInnerHTML)
+                output && (
+                    <div key={index} className="mx-2 my-1">
+                        <span className="text-white">Terminal &gt; </span>
+                        <span className="text-yellow-300">{cmd}</span>
                         <div dangerouslySetInnerHTML={{ __html: output }} className="text-emerald-400"></div>
-                    )}
-                </div>
+                    </div>
+                )
             ))}
 
             {/* Input field for user to type commands */}

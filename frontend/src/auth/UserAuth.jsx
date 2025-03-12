@@ -22,10 +22,6 @@ const UserAuth = ({ children }) => {
         setTimeout(() => {
             // get user Data
             axios.get('/users/profile').then((res) => {
-                // localStorage.removeItem("token");
-                // localStorage.setItem('token', res.data.token)
-                console.log(res.data.token);
-                
                 dispatch(addUser(res.data.user))
                 setLoading(false)
             }).catch(() => {
