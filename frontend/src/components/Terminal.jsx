@@ -6,6 +6,7 @@ import { getWebContainer } from '../config/webContainer'
 export default function TerminalInput() {
     // State for storing user input and executed commands
     const [input, setInput] = useState("");
+    // const [output, setOutput] = useState('');
     const [commands, setCommands] = useState([]);
     const [webContainer, setWebContainer] = useState(null);
 
@@ -40,22 +41,22 @@ export default function TerminalInput() {
         let isCmdProcess;
 
         const webContainerCmdFunc = async () => {
-            try {
-                let command = WebContainerCommand[cmd]();
-                console.log(command[0]);
-                
-                const cmdProcess = await webContainer?.spawn(command[0], command.slice(1));
-                if (cmdProcess?.output) {
-                    cmdProcess.output.pipeTo(new WritableStream({
-                        write(chunk) {
-                            setCommands(prev => [...prev, { cmd, output: chunk }]);
-                        }
-                    }));
-                }
-            } catch {
-                setCommands(prev => [...prev, { cmd, output: `Command Not Found ${cmd}` }]);
+            let command = WebContainerCommand[cmd]();
+
+            const cmdProcess = await webContainer?.spawn(command[0], command.slice(1));
+
+            if (cmdProcess?.output) {
+                let outputText = ""; // Accumulate output
+
+                await cmdProcess.output.pipeTo(new WritableStream({
+                    write(chunk) {
+                        outputText += chunk + "<br>"; // Strip ANSI codes
+                        setCommands(prev => [...prev.slice(0, -1), { cmd, output: outputText }]); // Update last command output
+                    }
+                }));
             }
         };
+
 
         // Execute command if found, otherwise return a Redirect to the webContainerCmdFunc
         let output;
