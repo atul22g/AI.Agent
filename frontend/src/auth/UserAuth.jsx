@@ -22,10 +22,14 @@ const UserAuth = ({ children }) => {
         setTimeout(() => {
             // get user Data
             axios.get('/users/profile').then((res) => {
+                // localStorage.removeItem("token");
+                // localStorage.setItem('token', res.data.token)
+                console.log(res.data.token);
+                
                 dispatch(addUser(res.data.user))
                 setLoading(false)
             }).catch(() => {
-                toast.info("Internal Server Error", toastify())
+                toast.info("Your Sesssion is Expired", toastify())
                 setLoading(false)
                 navigate('/login')
             })
@@ -35,7 +39,7 @@ const UserAuth = ({ children }) => {
                 dispatch(addProjects(res.data.projects))
             }).catch(() => {
             })
-        }, 5000);
+        });
     }, [dispatch, navigate])
 
 
