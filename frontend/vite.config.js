@@ -16,7 +16,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/cdn/, '')
       },
       '/icon': {
-        target: 'https://atugatran.github.io',
+        target: 'https://cdn.jsdelivr.net',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/icon/, '')
       }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import { updateFileTree } from '../redux/slices/projectSlice';
-import { TerminalToggle } from '../redux/slices/settingSlice';
+// import { TerminalToggle } from '../redux/slices/settingSlice';
 
 
 const KeyPressListener = ({ setSaveOption, saveOption, currentFile }) => {
@@ -23,9 +23,9 @@ const KeyPressListener = ({ setSaveOption, saveOption, currentFile }) => {
 
     useEffect(() => {
         const handleKeyDown = (event) => {
-            if (event.altKey && event.key == '`') {
-                dispatch(TerminalToggle());
-            }
+            // if (event.altKey && event.key == '`') {
+            //     dispatch(TerminalToggle());
+            // }
             if (event.key === 'Alt' || event.key === 's') {
                 setKeysPressed((prevState) => {
                     if (prevState[event.key]) return prevState;
@@ -82,7 +82,6 @@ const KeyPressListener = ({ setSaveOption, saveOption, currentFile }) => {
         } else {
             setSaveOption([...saveOption, { fileName: currentFile, status: status }]);
         }
-
     };
 
     useEffect(() => {

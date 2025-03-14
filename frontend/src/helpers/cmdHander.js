@@ -19,5 +19,5 @@ export const BasicCommand = {
 export const WebContainerCommand = {
     "ls": () => ["ls"],
     "npm i": () => ['npm', ['install']],
-    "npm start": () => ['npm', ['start']],
+    "npm run start": () => ['npm', ['start']],
 }

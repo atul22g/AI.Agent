@@ -50,7 +50,7 @@ export default function TerminalInput() {
 
                 await cmdProcess.output.pipeTo(new WritableStream({
                     write(chunk) {
-                        outputText += chunk + "<br>"; // Strip ANSI codes
+                        outputText += chunk; // Strip ANSI codes
                         setCommands(prev => [...prev.slice(0, -1), { cmd, output: outputText }]); // Update last command output
                     }
                 }));
@@ -100,9 +100,11 @@ export default function TerminalInput() {
             {commands.map(({ cmd, output }, index) => (
                 output && (
                     <div key={index} className="mx-2 my-1">
+                    {console.log(commands)
+                    }
                         <span className="text-white">Terminal &gt; </span>
                         <span className="text-yellow-300">{cmd}</span>
-                        <div dangerouslySetInnerHTML={{ __html: output }} className="text-emerald-400"></div>
+                        <div dangerouslySetInnerHTML={{ __html: output.replace('[',<br/>) }} className="text-emerald-400"></div>
                     </div>
                 )
             ))}

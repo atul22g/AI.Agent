@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import CodeView from './CodeView'
 import { currentFileOpen, filesOpens } from '../redux/slices/codeEditorSlice'
 import KeyPressListener from '../helpers/KeyPressListener'
-import Terminal from './Terminal'
+// import Terminal from './Terminal'
 
 const CodeBar = () => {
     const dispatch = useDispatch()
@@ -59,53 +59,66 @@ const CodeBar = () => {
             <KeyPressListener setSaveOption={setSaveOption} saveOption={saveOption} currentFile={currentFile} />
             <div className="w-full relative">
                 {/* Open Files */}
-                <div className="w-full h-9 bg-[color:var(--secondary-color)] flex overflow-scroll message-box">
+                <div className="w-full h-9 bg-[color:var(--secondary-color)] flex justify-between overflow-scroll message-box">
                     {openFiles.map((file, index) => (
-                        <span key={index}
-                            onClick={() => changeFile(file)}
-                            className={`bg-[color:var(--code-bg)] text-[color:var(--text-color)] border-b-2 cursor-pointer h-9 w-40 flex justify-evenly items-center group ${currentFileState == file ? 'border-white' : 'border-transparent'}`}>
-                            <i className="fa-solid fa-files"></i>
-                            <span className="font-medium">{file}</span>
-                            {
-                                currentFileState === file ? (
-                                    saveOption.some(fileItem => fileItem.fileName === file) ? (
-                                        saveOption.map((fileItem, key) => {
-                                            if (fileItem.fileName === file) {
-                                                if (fileItem.status === "typing") {
-                                                    return <span key={key} className='bg-white p-1 mx-[5px] rounded-full'></span>;
-                                                } else if (fileItem.status === "saving") {
-                                                    return (
-                                                        <i
-                                                            key={key}
-                                                            onClick={(e) => removecurrentFile(e, file)}
-                                                            className={`fa-light fa-xmark opacity-0 group-hover:opacity-100 transition-opacity 
+                        <>
+                            <span>
+                                <span key={index}
+                                    onClick={() => changeFile(file)}
+                                    className={`bg-[color:var(--code-bg)] text-[color:var(--text-color)] border-b-2 cursor-pointer h-9 w-40 flex justify-evenly items-center group ${currentFileState == file ? 'border-white' : 'border-transparent'}`}>
+                                    <i className="fa-solid fa-files"></i>
+                                    <span className="font-medium">{file}</span>
+                                    {
+                                        currentFileState === file ? (
+                                            saveOption.some(fileItem => fileItem.fileName === file) ? (
+                                                saveOption.map((fileItem, key) => {
+                                                    if (fileItem.fileName === file) {
+                                                        if (fileItem.status === "typing") {
+                                                            return <span key={key} className='bg-white p-1 mx-[5px] rounded-full'></span>;
+                                                        } else if (fileItem.status === "saving") {
+                                                            return (
+                                                                <i
+                                                                    key={key}
+                                                                    onClick={(e) => removecurrentFile(e, file)}
+                                                                    className={`fa-light fa-xmark opacity-0 group-hover:opacity-100 transition-opacity 
                                 hover:bg-slate-400 duration-200 rounded-md p-1 ${currentFileState === file ? 'opacity-100 ' : ''}`}
-                                                        ></i>
-                                                    );
-                                                }
-                                            }
-                                            return null; // Ensures the function always returns a value
-                                        })
-                                    ) : (
-                                        <i
-                                            onClick={(e) => removecurrentFile(e, file)}
-                                            className={`fa-light fa-xmark opacity-0 group-hover:opacity-100 transition-opacity 
+                                                                ></i>
+                                                            );
+                                                        }
+                                                    }
+                                                    return null; // Ensures the function always returns a value
+                                                })
+                                            ) : (
+                                                <i
+                                                    onClick={(e) => removecurrentFile(e, file)}
+                                                    className={`fa-light fa-xmark opacity-0 group-hover:opacity-100 transition-opacity 
             hover:bg-slate-400 duration-200 rounded-md p-1 ${currentFileState === file ? 'opacity-100 ' : ''}`}
-                                        ></i>
-                                    )
-                                ) : (
-                                    <span className='bg-[color:var(--code-bg)] mx-[5px] p-1 rounded-full'></span> // Default when file state doesn't match
-                                )
-                            }
-
-                        </span>
+                                                ></i>
+                                            )
+                                        ) : (
+                                            <span className='bg-[color:var(--code-bg)] mx-[5px] p-1 rounded-full'></span> // Default when file state doesn't match
+                                        )
+                                    }
+                                </span>
+                            </span>
+                        </>
                     ))}
+                    {/* Serer Bar  */}
+                    <span className={`bg-[color:var(--code-bg)] text-[color:var(--text-color)] cursor-pointer h-9 w-28 flex justify-evenly items-center group`}>
+                        <i className="fa-solid fa-server"></i>
+                        <span className="font-medium">Server</span>
+                    </span>
+
+                    {/* Server Run Button  */}
+                    <span className='text-white flex items-center justify-center w-10 cursor-pointer'>
+                        <i className="fa-solid fa-play"></i>
+                    </span>
                 </div>
                 {/* Code View */}
                 <CodeView />
                 {/* Terminal */}
-                <Terminal/>
-            </div>
+                {/* <Terminal /> */}
+            </div >
         </>
     )
 }
