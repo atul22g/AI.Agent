@@ -27,6 +27,12 @@ const FileExplorer = () => {
                     </span>
                 )) : null
             }
+            {/* Server  */}
+            <span onClick={() => changeFile('server')}
+                className="cursor-pointer  hover:bg-[color:var(--hover-text-color)] px-4 text-[color:var(--text-color)] flex items-center gap-2">
+                <i className="fa-solid fa-server text-white"></i>
+                <span className="pb-1">Server</span>
+            </span>
         </>
     )
 }

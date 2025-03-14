@@ -46,14 +46,16 @@ const model = genAI.getGenerativeModel({
                 "version": "1.0.0",
                 "main": "index.js",
                 "scripts": {
-                    "test": "echo \"Error: no test specified\" && exit 1"
+                    "start": "node server.js",
+                    "dev": "nodemon server.js"
                 },
                 "keywords": [],
                 "author": "",
                 "license": "ISC",
                 "description": "",
                 "dependencies": {
-                    "express": "^4.21.2"
+                    "express": "^4.21.2",
+                    "nodemon": "^3.1.9"
                 }
             }"
         },

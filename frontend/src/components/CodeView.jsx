@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import hljs from "highlight.js";
 import KeyPressListener from "../helpers/KeyPressListener";
 import DefaultPage from "../helpers/DefaultPage";
+import ServerPage from "../helpers/ServerPage";
 
 const CodeView = () => {
     const [ft, setFt] = useState('');
@@ -54,6 +55,7 @@ const CodeView = () => {
     return (
         <>
             <KeyPressListener/>
+            {currentFile == 'server'  ? <ServerPage/> : null}
             {ft && ft[currentFile] ? (
                 <div className="w-full flex-grow absolute max-h-[calc(100vh-2.25rem)]">
                     <pre className="hljs h-full">

@@ -256,7 +256,6 @@ const Project = () => {
                                 onClick={async () => {
                                     await webContainer.mount(fileTree)
 
-
                                     const installProcess = await webContainer.spawn("npm", ["install"])
 
 
@@ -285,7 +284,6 @@ const Project = () => {
                                         console.log(port, url)
                                         setIframeUrl(url)
                                     })
-
                                 }}
                                 className='p-2 px-4 bg-slate-300 text-white'
                             >
