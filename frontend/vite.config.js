@@ -14,12 +14,7 @@ export default defineConfig({
         target: 'https://unpkg.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/cdn/, '')
-      },
-      // '/icon': {
-      //   target: 'https://cdn.jsdelivr.net',
-      //   changeOrigin: true,
-      //   rewrite: (path) => path.replace(/^\/icon/, '')
-      // }
+      }
     }
   }
 })

@@ -8,14 +8,14 @@
   />
   <title>AI Agent</title>
   <!-- highlightjs/cdn -->
-  <!-- <link
+  <link
     rel="stylesheet"
     href="/cdn/@highlightjs/cdn-assets@11.9.0/styles/nord.min.css"
   />
   <script
     crossorigin
     src="/cdn/@highlightjs/cdn-assets@11.9.0/highlight.min.js"
-  ></script> -->
+  ></script>
   <!-- highlightjs/cdn -->
   <link
     rel="stylesheet"
@@ -27,6 +27,19 @@
   ></script>
   <!-- fontawesome -->
   <!-- <link rel="stylesheet" href="/icon/gh/Atugatran/FontAwesome6Pro@main/css/all.min.css" > -->
+    <!-- Start Single Page Apps for GitHub Pages -->
+    <script type="text/javascript">
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
 </head>
 <body>
   <div id="root"></div>

@@ -70,11 +70,11 @@ const Home = () => {
 
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded-md shadow-md w-1/3">
-                        <h2 className="text-xl mb-4">Create New Project</h2>
+                    <div className="bg-[color:var(--tertiary-color)] p-6 rounded-md shadow-md w-1/3">
+                        <h2 className="text-white text-xl mb-4">Create New Project</h2>
                         <form onSubmit={createProject}>
                             <div className="mb-4">
-                                <label className="block text-sm font-medium text-gray-700">Project Name</label>
+                                <label className="block text-sm font-medium text-white">Project Name</label>
                                 <input
                                     onChange={(e) => setProjectName(e.target.value)}
                                     value={projectName}
