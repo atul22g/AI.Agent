@@ -5,8 +5,8 @@ const initialState = {
     Explorer: 'open',
     AddCollaboratorModal: 'close',
     Terminal: false,
-    focused: false
-
+    focused: false,
+    ServerUrl: null
 }
 
 const settingSlice = createSlice({
@@ -35,11 +35,13 @@ const settingSlice = createSlice({
         },
         AddCollaboratortoggle: (state, action) => {
             state.AddCollaboratorModal = action.payload;
-
+        },
+        AddServerUrl: (state, action) => {
+            state.ServerUrl = action.payload;
         }
     }
 })
 
-export const { ActivityBartoggle, TerminalToggle, AddCollaboratortoggle } = settingSlice.actions;
+export const { ActivityBartoggle, TerminalToggle, AddCollaboratortoggle, AddServerUrl } = settingSlice.actions;
 
 export default settingSlice.reducer;

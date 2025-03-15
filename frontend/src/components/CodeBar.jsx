@@ -4,6 +4,7 @@ import CodeView from './CodeView'
 import { currentFileOpen, filesOpens } from '../redux/slices/codeEditorSlice'
 import KeyPressListener from '../helpers/KeyPressListener'
 import { getWebContainer } from '../config/webContainer'
+import { AddServerUrl } from '../redux/slices/settingSlice'
 // import Terminal from './Terminal'
 
 const CodeBar = () => {
@@ -50,7 +51,7 @@ const CodeBar = () => {
         // Install dependencies
         const installProcess = await webContainer.spawn('npm', ['install']);
         // Wait for install command to exit
-        console.log("Installing dependencies...");
+        // console.log("Installing dependencies...");
         
         return installProcess.exit;
     }
@@ -58,13 +59,12 @@ const CodeBar = () => {
     async function startDevServer() {
         // Run `npm run start` to start the Express app
         await webContainer.spawn('npm', ['run', 'start']);
-        console.log("Project Start.");
+        // console.log("Project Start.");
 
         // Wait for `server-ready` event
         webContainer.on('server-ready', (port, url) => {
-            console.log(`Server is running`);
-            console.log(`Server is running on port ${port}`);
-            console.log(`Server is running on url ${url}`);
+            dispatch(AddServerUrl(url));
+            // console.log(`Server is running`);
             // Open the browser with the URL
             // window.open(url);
         });
