@@ -15,11 +15,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/cdn/, '')
       },
-      '/icon': {
-        target: 'https://cdn.jsdelivr.net',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/icon/, '')
-      }
+      // '/icon': {
+      //   target: 'https://cdn.jsdelivr.net',
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/icon/, '')
+      // }
     }
   }
 })

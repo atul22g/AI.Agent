@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.0",
     "@webcontainer/api": "^1.5.1-internal.4",
+    "atul-font-awesome": "^1.0.0",
     "axios": "^1.7.9",
     "chroma-js": "^3.1.2",
     "highlight.js": "^11.11.0",

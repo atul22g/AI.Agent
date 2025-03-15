@@ -58,7 +58,7 @@ const CodeBar = () => {
 
     async function startDevServer() {
         // Run `npm run start` to start the Express app
-        await webContainer.spawn('npm', ['run', 'start']);
+        await webContainer.spawn('npm', ['run', 'dev']);
         // console.log("Project Start.");
 
         // Wait for `server-ready` event
