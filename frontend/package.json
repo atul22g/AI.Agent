@@ -12,9 +12,9 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.0",
     "@webcontainer/api": "^1.5.1-internal.4",
-    "atul-font-awesome": "^1.0.0",
     "axios": "^1.7.9",
     "chroma-js": "^3.1.2",
+    "fontawesome6pro": "^1.0.0",
     "highlight.js": "^11.11.0",
     "markdown-to-jsx": "^7.7.1",
     "prop-types": "^15.8.1",
